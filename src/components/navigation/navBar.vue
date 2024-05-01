@@ -31,10 +31,13 @@ const handleLogout = async () => {
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="d-flex flex-row justify-content-between collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li v-if="user" class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li v-if="user" class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
                     </li>
                     <li v-if="!user" class="nav-item">
                         <a class="nav-link" href="/signup">Signup</a>

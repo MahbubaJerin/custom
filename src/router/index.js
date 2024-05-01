@@ -3,13 +3,14 @@ import HomeView from '../views/HomeView.vue'
 import SignupView from '@/views/AuthView/SignupView.vue'
 import LoginView from'@/views/AuthView/LoginView.vue'
 import ProfileView from '@/views/AuthView/ProfileView.vue'
+import PostUpView from '@/views/PostView/PostUpView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: PostUpView,
       meta: {
         requiresAuth: true,
       },
