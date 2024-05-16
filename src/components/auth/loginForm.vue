@@ -1,25 +1,47 @@
 <template>
-    <div class="login">
-        <h1>Login</h1>
-        <form @submit.prevent="login">
-            <input type="email" v-model="email" placeholder="Email" required>
-            <input type="password" v-model="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-            <p v-if="error" class="error">{{ error }}</p>
-        </form>
+    <div class="login grid-container">
+        <div class="grid-item">
+            <h1>Login</h1>
+            <form @submit.prevent="login">
+                <div class="grid-item">
+                    <input type="email" v-model="email" placeholder="Email" required :class="{ 'is-invalid': emailError }">
+                    <p v-if="emailError" class="error">{{ emailError }}</p>
+                </div>
+                <div class="grid-item">
+                    <input type="password" v-model="password" placeholder="Password" required :class="{ 'is-invalid': passwordError }">
+                    <p v-if="passwordError" class="error">{{ passwordError }}</p>
+                </div>
+                <div class="grid-item">
+                    <button type="submit">Login</button>
+                    <p v-if="error" class="error">{{ error }}</p>
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 
 <script setup>
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
 const email = ref("");
 const password = ref("");
 const error = ref(null);
 
+const emailError = computed(() => {
+    const pattern = /^\S+@\S+\.\S+$/;
+    return email.value && !pattern.test(email.value) ? 'Invalid email address' : null;
+});
+
+const passwordError = computed(() => {
+    return password.value && password.value.length < 8 ? 'Password must be at least 8 characters' : null;
+});
+
 async function login() {
+    if (emailError.value || passwordError.value) {
+        return;
+    }
     try {
         const auth = getAuth();
         const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value);
@@ -42,17 +64,33 @@ async function login() {
 </script>
 
 <style scoped>
+body {
+    background-color: #e8f5e9; /* Material Design's 'Green 50' */
+}
+
 .login {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: #fff;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+}
+
+.grid-item {
+    margin: 10px;
 }
 
 h1 {
     text-align: center;
+    color: #228B22; /* ForestGreen */
 }
 
 input {
@@ -64,11 +102,15 @@ input {
 button {
     width: 100%;
     padding: 10px;
-    background-color: #4caf50;
+    background-color: #32CD32; /* LimeGreen */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+button:hover {
+    background-color: #228B22; /* ForestGreen */
 }
 
 .error {
