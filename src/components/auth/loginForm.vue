@@ -4,16 +4,21 @@
             <h1>Login</h1>
             <form @submit.prevent="login">
                 <div class="grid-item">
-                    <input type="email" v-model="email" placeholder="Email" required :class="{ 'is-invalid': emailError }">
+                    <input type="email" v-model="email" placeholder="Email" required
+                        :class="{ 'is-invalid': emailError }">
                     <p v-if="emailError" class="error">{{ emailError }}</p>
                 </div>
                 <div class="grid-item">
-                    <input type="password" v-model="password" placeholder="Password" required :class="{ 'is-invalid': passwordError }">
+                    <input type="password" v-model="password" placeholder="Password" required
+                        :class="{ 'is-invalid': passwordError }">
                     <p v-if="passwordError" class="error">{{ passwordError }}</p>
                 </div>
                 <div class="grid-item">
                     <button type="submit">Login</button>
                     <p v-if="error" class="error">{{ error }}</p>
+                </div>
+                <div class="grid-item">
+                    <a href="/signup">Don't have an account? Sign up</a>
                 </div>
             </form>
         </div>
@@ -65,7 +70,8 @@ async function login() {
 
 <style scoped>
 body {
-    background-color: #e8f5e9; /* Material Design's 'Green 50' */
+    background-color: #e8f5e9;
+    /* Material Design's 'Green 50' */
 }
 
 .login {
@@ -90,7 +96,8 @@ body {
 
 h1 {
     text-align: center;
-    color: #228B22; /* ForestGreen */
+    color: #228B22;
+    /* ForestGreen */
 }
 
 input {
@@ -102,7 +109,8 @@ input {
 button {
     width: 100%;
     padding: 10px;
-    background-color: #32CD32; /* LimeGreen */
+    background-color: #32CD32;
+    /* LimeGreen */
     color: white;
     border: none;
     border-radius: 5px;
@@ -110,7 +118,8 @@ button {
 }
 
 button:hover {
-    background-color: #228B22; /* ForestGreen */
+    background-color: #228B22;
+    /* ForestGreen */
 }
 
 .error {

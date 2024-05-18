@@ -1,14 +1,18 @@
 <script setup>
 import CreatePost from '../../components/homepage/CreatePost.vue';
+import SearchUser from '../../components/homepage/searchUser.vue';
 import ViewPost from '../../components/homepage/ViewPost.vue';
 </script>
 <template>
   <main>
     <div>
-    <CreatePost />
+      <SearchUser />
     </div>
     <div>
-    <ViewPost />
+      <CreatePost />
+    </div>
+    <div>
+      <ViewPost />
     </div>
   </main>
 </template>

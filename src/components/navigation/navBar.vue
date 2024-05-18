@@ -9,6 +9,10 @@ const router = useRouter();
 // Initialize loading state and fetch the current user
 const loading = true; // You can handle loading state based on getCurrentUser() promise
 const user = useCurrentUser();
+let uid;
+if (user) {
+    uid = auth.currentUser?.uid;
+}
 
 const handleLogout = async () => {
     try {
@@ -26,7 +30,7 @@ const handleLogout = async () => {
 <template>
     <nav class="navbar navbar-expand-lg bg-dark " data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="#">PlantBook</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -37,7 +41,10 @@ const handleLogout = async () => {
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
                     <li v-if="user" class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
+                        <a class="nav-link active" aria-current="page" :href="`/profile/${uid}`">Profile</a>
+                    </li>
+                    <li v-if="user" class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/account">Account</a>
                     </li>
                     <li v-if="!user" class="nav-item">
                         <a class="nav-link" href="/signup">Signup</a>

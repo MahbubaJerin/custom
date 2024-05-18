@@ -1,9 +1,9 @@
-<template>  
+<template>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 col-md-6 col-lg-4">
-                <div class="Signup"> 
-                    <h1 >Sign Up</h1>
+                <div class="Signup">
+                    <h1>Sign Up</h1>
                     <form @submit.prevent="signup">
                         <div class="form-group">
                             <label for="username">User-name</label>
@@ -11,16 +11,18 @@
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" v-model.lazy="email" @blur="emailTouched = true" required>
+                            <input type="email" id="email" v-model="email" @blur="emailTouched = true" required>
                             <p v-if="emailError" class="error">{{ emailError }}</p>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" id="password" v-model.lazy="password" @blur="passwordTouched = true" required>
+                            <input type="password" id="password" v-model="password" @blur="passwordTouched = true"
+                                required>
                             <p v-if="passwordError" class="error">{{ passwordError }}</p>
                         </div>
                         <button type="submit" class="btn btn-primary">Sign Up</button>
                     </form>
+                    <a href="/login">Already have an account? Login</a>
                 </div>
             </div>
         </div>
@@ -29,10 +31,10 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
-import {doc, setDoc} from 'firebase/firestore';
-import {db, userRef} from '@/firebaseConfig.js';
-
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { db, userRef } from '@/firebaseConfig.js';
+import { useRouter } from "vue-router";
 const username = ref('');
 const email = ref('');
 const emailTouched = ref(false);
@@ -42,10 +44,12 @@ const error = ref(null);
 
 const emailError = computed(() => {
     if (!emailTouched.value) {
+        console.log("email null");
         return null;
     }
     const pattern = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     if (!pattern.test(email.value)) {
+        console.log("email invalid pattern");
         return 'Invalid email address';
     }
     return null;
@@ -53,12 +57,35 @@ const emailError = computed(() => {
 
 const passwordError = computed(() => {
     if (!passwordTouched.value) {
+        console.log("password null");
         return null;
     }
-    const pattern = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
-    if (!pattern.test(password.value)) {
-        return 'Password must be at least 8 characters long, contain at least one uppercase letter, one number, and one special character';
+
+    if (password.value.length < 8 || password.value.length > 20) {
+        console.log("password invalid length");
+        return 'Password must be between 8 and 20 characters';
     }
+
+    if (!/[A-Z]/.test(password.value)) {
+        console.log("password missing uppercase letter");
+        return 'Password must contain at least one uppercase letter';
+    }
+
+    if (!/[a-z]/.test(password.value)) {
+        console.log("password missing lowercase letter");
+        return 'Password must contain at least one lowercase letter';
+    }
+
+    if (!/[0-9]/.test(password.value)) {
+        console.log("password missing number");
+        return 'Password must contain at least one number';
+    }
+
+    if (!/[@$!%*?&/]/.test(password.value)) {
+        console.log("password missing special character");
+        return 'Password must contain at least one special character (@, $, !, %, *, ?, &, /)';
+    }
+
     return null;
 });
 
@@ -83,17 +110,20 @@ async function signup() {
         console.error(e);
         error.value = e.message;
     }
+    window.location.href = "/account";
 }
 </script>
 
 <style scoped>
 body {
-    background-color: #e8f5e9; /* Material Design's 'Green 50' */
+    background-color: #e8f5e9;
+    /* Material Design's 'Green 50' */
 }
 
 .Signup h1 {
     text-align: center;
-    color: #228B22; /* ForestGreen */
+    color: #228B22;
+    /* ForestGreen */
 }
 
 .Signup {
@@ -102,7 +132,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #fff;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
@@ -122,19 +152,24 @@ body {
 }
 
 .btn-primary {
-    background-color: #32CD32; /* LimeGreen */
-    border-color: #32CD32; /* LimeGreen */
+    background-color: #32CD32;
+    /* LimeGreen */
+    border-color: #32CD32;
+    /* LimeGreen */
     color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    display: block; /* make the button a block element */
-    margin: 0 auto; /* center the button */
+    display: block;
+    /* make the button a block element */
+    margin: 0 auto;
+    /* center the button */
 }
 
 .btn-primary:hover {
-    background-color: #228B22; /* ForestGreen */
+    background-color: #228B22;
+    /* ForestGreen */
 }
 
 .error {
