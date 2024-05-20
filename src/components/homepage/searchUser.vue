@@ -65,6 +65,10 @@ const handleSuggestionClick = (userId) => {
 
 <style scoped>
 .card {
-   background-color: indigo;
+   background-color: rgb(55, 165, 104);
+   color: white;
+}
+.card-header {
+   font-weight: bold;
 }
 </style>

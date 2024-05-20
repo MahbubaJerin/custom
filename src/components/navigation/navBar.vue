@@ -58,3 +58,24 @@ const handleLogout = async () => {
         </div>
     </nav>
 </template>
+<style scoped>
+.navbar {
+    background-color: #0fef0f; /* This is a dark green color */
+}
+
+.nav-link {
+    color: #FFD700; /* This is a gold color that should stand out against the green */
+}
+
+.nav-link:hover {
+    color: #FFA500; /* This is an orange color for when the user hovers over a link */
+}
+
+.navbar-brand {
+    color: #32CD32; /* This is a lime green color */
+}
+
+.navbar-brand:hover {
+    color: #ADFF2F; /* This is a green-yellow color for when the user hovers over the "PlantBook" text */
+}
+</style>

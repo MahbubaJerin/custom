@@ -39,12 +39,8 @@ const emailError = computed(() => {
     return email.value && !pattern.test(email.value) ? 'Invalid email address' : null;
 });
 
-const passwordError = computed(() => {
-    return password.value && password.value.length < 8 ? 'Password must be at least 8 characters' : null;
-});
-
 async function login() {
-    if (emailError.value || passwordError.value) {
+    if (emailError.value) {
         return;
     }
     try {
@@ -61,9 +57,9 @@ async function login() {
             console.log("User logged in successfully!");
         }
 
-    } catch (error) {
-        console.error("Error signing in:", error);
-        error.value = error.message; // Display error message to user
+    } catch (err) {
+        console.error("Error signing in:", err);
+        error.value = "Invalid login details. Please try again.";
     }
 }
 </script>

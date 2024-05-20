@@ -100,35 +100,30 @@ const createPost = async () => {
             <form @submit.prevent="createPost">
               <div class="mb-3">
 
-                <textarea class="form-control" id="post" v-model="post" required></textarea>
+                <textarea class="form-control" id="post" v-model="post" placeholder="Post something about you and your plant story today" required></textarea>
               </div>
               <div class="mb-3">
                 <fieldset :disabled="!!uploadTask">
                   <div class=" d-flex align-items-center justify-content-between">
                     <div class="">
                       <button type="button" @click="open({ accept: 'image/*', multiple: false })"
-                        class="btn   d-flex align-items-center justify-content-center">
-                        <template v-if="files?.length === 1">
-                          <div class="selected-file d-flex align-items-center">
-                            <span class="file-name" title="{{ files.item(0).name }}">Selected: {{ files.item(0).name
-                              }}</span>
-                            <span class="file-actions " @click="open({ accept: 'image/*', multiple: false })">
-                              Change
-                            </span>
-                          </div>
-                        </template>
-                        <template v-else>
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="photo-icon"
-                            style="width: 24px; height: 24px;">
-                            <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                            <path
-                              d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM323.8 202.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6L170.7 297c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4s12.4 13.6 21.6 13.6h96 32H424c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7l-120-176zM112 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z" />
-                          </svg>
-                        </template>
-                      </button>
+  class="btn d-flex align-items-center justify-content-center">
+  <template v-if="files?.length === 1">
+    <div class="selected-file d-flex align-items-center">
+      <span class="file-name" title="{{ files.item(0).name }}">Selected: {{ files.item(0).name }}</span>
+      <span class="file-actions " @click="open({ accept: 'image/*', multiple: false })">Change</span>
+    </div>
+  </template>
+  <template v-else>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="photo-icon" style="width: 24px; height: 24px;">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h16a2 2 0 012 2v12a2 2 0 01-2 2H3a2 2 0 01-2-2V5a2 2 0 012-2zm3 2a1 1 0 00-1 1v.835a1.42 1.42 0 00.34.977l1.66 1.928c.219.25.555.39.9.39h6a1.5 1.5 0 001-2.732l-1.39-1.61a2.495 2.495 0 00-2-.683H6zm3 4a1 1 0 11-2 0 1 1 0 012 0z"></path>
+</svg>
+<span>Post a picture</span> <!-- This line will add the text next to the icon -->
+</template>
+</button>
                     </div>
                     <div class="">
-                      <button type="submit" class="btn btn-primary">Post</button>
+                      <button type="submit" class="btn btn-success btn-dark-green">Post</button>
                     </div>
                   </div>
                 </fieldset>
@@ -143,6 +138,11 @@ const createPost = async () => {
 </template>
 <style scoped>
 .photo-icon {
-  fill: #007bff;
+  fill: #0ae76d;
+}
+.btn-dark-green {
+  background-color: #006400;
+  border-color: #006400;
+  color: white;
 }
 </style>
