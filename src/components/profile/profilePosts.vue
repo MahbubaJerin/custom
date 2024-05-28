@@ -134,7 +134,7 @@ const addComment = async () => {
             <div class="col-md-8 offset-md-2">
                 <div class="card">
                     <div class="card-body">
-                        <h1 class="text-center">Posts</h1>
+                        <h1 class="text-center">Your Posts</h1>
                         <div v-for="post in posts" :key="post._id">
                             <div class="card mb-2">
                                 <div class="card-body">
@@ -173,7 +173,7 @@ const addComment = async () => {
     width: 20px;
     height: 20px;
     cursor: pointer;
-    fill: #007bff;
+    fill: #FFD700;
 }
 
 .comment-icon {

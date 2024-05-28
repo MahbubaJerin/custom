@@ -178,13 +178,6 @@ const addComment = async () => {
   fill: #FFD700; /* Color for like button */
 }
 
-.comment-icon {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  fill: #FFA500; /* Color for comment button */
-}
-
 .posts-heading {
   color: #006400; /* Dark green color */
   font-weight: bold;
