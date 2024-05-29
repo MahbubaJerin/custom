@@ -127,9 +127,35 @@ const addComment = async () => {
     selectedPost.value.commentsCount++;
     newComment.value = '';
 }
+const deletePost = async () => {
+    console.log(selectedPost.value);
+    const docRef = doc(postRef, selectedPost.value);
+    await deleteDoc(docRef);
+    posts.value = posts.value.filter((post) => post.id !== selectedPost.value);
+    window.location.reload();
+}
 </script>
 <template>
     <div class="container">
+
+
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Post</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this post?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="deletePost">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
         <div class="modal fade" id="commentsModal" tabindex="-1" aria-labelledby="commentsModalLabel"
@@ -176,8 +202,19 @@ const addComment = async () => {
                         <div v-for="post in posts" :key="post._id">
                             <div class="card mb-2">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ userName }} posted at {{ extractDateTime(post.createdAt)
-                                        }}</h5>
+                                    <h5 class="card-title d-flex flex-row justify-content-between">
+                                        <div>
+                                            {{ userName }} posted at {{ extractDateTime(post.createdAt)
+                                            }}
+                                        </div>
+                                        <div>
+                                            <button v-if="myid === uid" type="button" class="btn btn-danger"
+                                                data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                                @click="showDeleteModal(post)">
+                                                X
+                                            </button>
+                                        </div>
+                                    </h5>
                                     <p>{{ post.post }}</p>
                                     <img v-if="post.image" :src="post.image" alt="post" class="img-fluid"
                                         :style="{ width: '300px', height: '200px' }" />

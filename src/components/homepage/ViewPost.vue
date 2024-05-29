@@ -1,10 +1,12 @@
 <script setup>
 import { ref } from "vue";
 import { postRef, userRef } from "@/firebaseConfig";
-import { doc, getDocs, getDoc, updateDoc, setDoc, arrayUnion } from "firebase/firestore";
+import { doc, getDocs, getDoc, updateDoc, deleteDoc, arrayUnion } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import router from "@/router";
 
 const auth = getAuth();
+
 const uid = auth.currentUser.uid;
 const userName = ref('');
 const fetchUserName = async () => {
@@ -47,7 +49,7 @@ const fetchPosts = async () => {
     );
   });
   console.log(posts.value);
-  posts.value.sort((a, b) => a.createdAt - b.createdAt);
+  posts.value.sort((b, a) => new Date(a.createdAt) - new Date(b.createdAt));
 };
 fetchPosts();
 
@@ -108,6 +110,9 @@ const showCommentsModal = async (post) => {
   newComment.value = '';
   // Fetch the latest comments if needed
 }
+const showDeleteModal = async (post) => {
+  selectedPost.value = post.id;
+}
 const extractDateTime = (createTime) => {
   const date = new Date(createTime);
   return date.toLocaleString();
@@ -129,9 +134,36 @@ const addComment = async () => {
   selectedPost.value.commentsCount++;
   newComment.value = '';
 }
+
+const deletePost = async () => {
+  console.log(selectedPost.value);
+  const docRef = doc(postRef, selectedPost.value);
+  await deleteDoc(docRef);
+  posts.value = posts.value.filter((post) => post.id !== selectedPost.value);
+  window.location.reload();
+}
 </script>
 <template>
   <div class="container">
+
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Post</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete this post?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" @click="deletePost">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
     <div class="modal fade" id="commentsModal" tabindex="-1" aria-labelledby="commentsModalLabel" aria-hidden="true">
@@ -172,12 +204,20 @@ const addComment = async () => {
       <div class="col-md-8 offset-md-2">
         <div class="card">
           <div class="card-body">
-            <h1 class="text-center posts-heading">Today's Posts</h1>
+            <h1 class="text-center posts-heading">Recent Posts</h1>
             <div v-for="post in posts" :key="post._id">
               <div class="card mb-2">
                 <div class="card-body">
-                  <h5 class="card-title"><a :href='"/profile/" + post.uid'>{{ post.uid === uid ? 'You' : post.userName
-                      }}</a> posted at {{ extractDateTime(post.createdAt) }}
+                  <h5 class="card-title d-flex flex-row justify-content-between">
+                    <div><a :href='"/profile/" + post.uid'>{{ post.uid === uid ? 'You' : post.userName
+                        }}</a> posted at {{ extractDateTime(post.createdAt) }}
+                    </div>
+                    <div>
+                      <button v-if="uid === post.uid" type="button" class="btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal" @click="showDeleteModal(post)">
+                        X
+                      </button>
+                    </div>
                   </h5>
                   <p>{{ post.post }}</p>
                   <img v-if="post.image" :src="post.image" alt="post" class="img-fluid"
