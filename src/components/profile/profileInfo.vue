@@ -126,12 +126,12 @@ fetchUserData();
 </template>
 <style scoped>
 .container {
-  background-color: #228B22; /* Forest Green */
+  background-color: #9ab79a; /* Forest Green */
   color: #FFFFFF; /* White */
 }
 
 .btn-primary {
-  background-color: #0fd10f; /* Dark Green */
+  background-color: #13be13; /* Dark Green */
   border-color: #d60a0a; /* Dark Green */
 }
 
@@ -141,7 +141,7 @@ fetchUserData();
 }
 
 .card {
-  background-color: #006400; /* Dark Green */
+  background-color: #3a633a; /* Dark Green */
   color: #FFFFFF; /* White */
 }
 
@@ -154,6 +154,6 @@ fetchUserData();
 }
 
 .dropdown-item:hover {
-  background-color: #32CD32; /* Lime Green */
+  background-color: #145c14; /* Lime Green */
 }
 </style>
