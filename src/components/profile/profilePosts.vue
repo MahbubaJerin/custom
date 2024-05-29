@@ -18,6 +18,10 @@ const fetchUserName = async () => {
         console.log("No such document!");
     }
 };
+const extractDateTime = (createTime) => {
+    const date = new Date(createTime);
+    return date.toLocaleString();
+}
 fetchUserName();
 var posts = ref([]);
 const selectedPost = ref(null);
@@ -162,7 +166,8 @@ const addComment = async () => {
                         <div v-for="post in posts" :key="post._id">
                             <div class="card mb-2">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ userName }} posted at {{ post.createdAt }}</h5>
+                                    <h5 class="card-title">{{ userName }} posted at {{ extractDateTime(post.createdAt)
+                                        }}</h5>
                                     <p>{{ post.post }}</p>
                                     <img v-if="post.image" :src="post.image" alt="post" class="img-fluid"
                                         :style="{ width: '300px', height: '200px' }" />
