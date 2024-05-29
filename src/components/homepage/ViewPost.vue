@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { postRef, userRef } from "@/firebaseConfig";
 import { doc, getDocs, getDoc, updateDoc, deleteDoc, arrayUnion } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import router from "@/router";
+
 
 const auth = getAuth();
 
@@ -24,6 +24,33 @@ var posts = ref([]);
 const selectedPost = ref(null);
 const newComment = ref('');
 const liked = ref('');
+const currentPage = ref(1);
+const postsPerPage = ref(5);
+const totalPages = ref(0);
+const currentPosts = ref([]);
+
+
+const goToPage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page;
+  }
+  currentPosts.value = posts.value.slice((currentPage.value - 1) * postsPerPage.value, currentPage.value * postsPerPage.value);
+};
+
+const previousPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
+  currentPosts.value = posts.value.slice((currentPage.value - 1) * postsPerPage.value, currentPage.value * postsPerPage.value);
+};
+
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++;
+  }
+  currentPosts.value = posts.value.slice((currentPage.value - 1) * postsPerPage.value, currentPage.value * postsPerPage.value);
+};
+
 const fetchPosts = async () => {
   const querySnapshot = await getDocs(postRef);
   querySnapshot.forEach((doc) => {
@@ -50,8 +77,11 @@ const fetchPosts = async () => {
   });
   console.log(posts.value);
   posts.value.sort((b, a) => new Date(a.createdAt) - new Date(b.createdAt));
+  totalPages.value = Math.ceil(posts.value.length / postsPerPage.value);
+  currentPosts.value = posts.value.slice(0, postsPerPage.value);
 };
 fetchPosts();
+
 
 const dislike = async (postId) => {
   console.log(postId);
@@ -205,7 +235,7 @@ const deletePost = async () => {
         <div class="card">
           <div class="card-body">
             <h1 class="text-center posts-heading">Recent Posts</h1>
-            <div v-for="post in posts" :key="post._id">
+            <div v-for="post in currentPosts" :key="post._id">
               <div class="card mb-2">
                 <div class="card-body">
                   <h5 class="card-title d-flex flex-row justify-content-between">
@@ -241,6 +271,21 @@ const deletePost = async () => {
                 </div>
               </div>
             </div>
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                  <a class="page-link" @click="previousPage" :disabled="currentPage.value === 1">Previous</a>
+                </li>
+                <li v-for="page in totalPages" :key="page"
+                  :class="{ 'page-item': true, 'active': currentPage === page }">
+                  <a class="page-link" @click="goToPage(page)">{{ page }}</a>
+                </li>
+
+                <li class="page-item">
+                  <a class="page-link" @click="nextPage" :disabled="currentPage.value === totalPages">Next</a>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
       </div>
@@ -260,5 +305,9 @@ const deletePost = async () => {
   color: #006400;
   /* Dark green color */
   font-weight: bold;
+}
+
+.pagination :hover {
+  cursor: pointer;
 }
 </style>
