@@ -5,7 +5,8 @@ import { doc, getDocs, getDoc, updateDoc, setDoc, arrayUnion } from "firebase/fi
 import { getAuth } from "firebase/auth";
 
 const auth = getAuth();
-const uid = auth.currentUser.uid;
+const myid = auth.currentUser.uid;
+const uid = window.location.pathname.split('/')[2];
 const userName = ref('');
 const fetchUserName = async () => {
     const docRef = doc(userRef, uid);
@@ -43,6 +44,28 @@ const fetchPosts = async () => {
     console.log(posts.value);
 };
 fetchPosts();
+const dislike = async (postId) => {
+    console.log(postId);
+    const docRef = doc(postRef, postId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        const postData = docSnap.data();
+
+        for (let i = 0; i < posts.value.length; i++) {
+            if (posts.value[i].id === postId) {
+                posts.value[i].likesCount = postData.likesCount - 1;
+            }
+        }
+        await updateDoc(docRef, {
+            likesCount: postData.likesCount - 1,
+            likes: postData.likes.filter((id) => id !== uid)
+        });
+    } else {
+        console.log("No such document!");
+    }
+
+}
 const like = async (postId) => {
     console.log(postId);
     const docRef = doc(postRef, postId);
@@ -51,7 +74,8 @@ const like = async (postId) => {
     if (docSnap.exists()) {
         const postData = docSnap.data();
         if (postData.likes.includes(uid)) {
-            return; // User has already liked the post, do nothing
+            await dislike(postId);
+            return;
         }
 
         for (let i = 0; i < posts.value.length; i++) {
@@ -134,11 +158,11 @@ const addComment = async () => {
             <div class="col-md-8 offset-md-2">
                 <div class="card">
                     <div class="card-body">
-                        <h1 class="text-center">Your Posts</h1>
+                        <h1 class="text-center">{{ uid == myid ? "Your Posts" : userName + "'s " + "Posts" }}</h1>
                         <div v-for="post in posts" :key="post._id">
                             <div class="card mb-2">
                                 <div class="card-body">
-                                    <h5 class="card-title">You posted at {{ post.createdAt }}</h5>
+                                    <h5 class="card-title">{{ userName }} posted at {{ post.createdAt }}</h5>
                                     <p>{{ post.post }}</p>
                                     <img v-if="post.image" :src="post.image" alt="post" class="img-fluid"
                                         :style="{ width: '300px', height: '200px' }" />
