@@ -28,7 +28,7 @@ const handleLogout = async () => {
 </script>
 
 <template>
-    <nav class="navbar fixed-top navbar-expand-lg bg-dark " data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-dark " data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">PlantBook</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
