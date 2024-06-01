@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { postRef, userRef } from "@/firebaseConfig";
-import { doc, getDocs, getDoc, updateDoc, setDoc, arrayUnion } from "firebase/firestore";
+import { doc, getDocs, getDoc, updateDoc, deleteDoc, arrayUnion } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const auth = getAuth();
@@ -112,6 +112,7 @@ const showCommentsModal = async (post) => {
     // Fetch the latest comments if needed
 }
 
+
 const addComment = async () => {
     if (!newComment.value.trim()) {
         return;
@@ -126,6 +127,9 @@ const addComment = async () => {
     selectedPost.value.comments.push({ userId: uid, userName: userName.value, comment: newComment.value, timestamp: new Date() });
     selectedPost.value.commentsCount++;
     newComment.value = '';
+}
+const showDeleteModal = async (post) => {
+    selectedPost.value = post.id;
 }
 const deletePost = async () => {
     console.log(selectedPost.value);
