@@ -66,7 +66,7 @@ const handleLogout = async () => {
 }
 
 .navbar-brand {
-    color: #40a578; /* Theme color for the brand */
+    color: #40A578; /* Theme color for the brand */
     font-weight: bold; /* Make the brand text bold */
     font-size: 24px; /* Increase font size for emphasis */
 }
@@ -91,4 +91,11 @@ const handleLogout = async () => {
     background-color: #1f6f52; /* Darker shade on hover */
     border-color: #1f6f52; /* Adjust border color on hover */
 }
+
+.navbar-brand {
+    color: #FFD700; /* Change the color of "PlantBook" text to #FFA500 */
+    font-weight: bold; /* Make the brand text bold */
+    font-size: 24px; /* Increase font size for emphasis */
+}
+
 </style>
