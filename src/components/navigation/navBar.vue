@@ -66,7 +66,7 @@ const handleLogout = async () => {
 }
 
 .navbar-brand {
-    color: #009688; /* Dark teal color for the brand */
+    color: #40a578; /* Theme color for the brand */
     font-weight: bold; /* Make the brand text bold */
     font-size: 24px; /* Increase font size for emphasis */
 }
@@ -78,17 +78,17 @@ const handleLogout = async () => {
 }
 
 .nav-link:hover {
-    color: #00796b; /* Dark teal color on hover */
+    color: #40a578; /* Theme color on hover */
 }
 
 .btn-primary {
-    background-color: #00796b; /* Dark teal color for the logout button */
-    border-color: #00796b; /* Same color for button border */
+    background-color: #40a578; /* Theme color for the logout button */
+    border-color: #40a578; /* Same color for button border */
     font-weight: bold; /* Make button text bold */
 }
 
 .btn-primary:hover {
-    background-color: #004d40; /* Darker shade on hover */
-    border-color: #004d40; /* Adjust border color on hover */
+    background-color: #1f6f52; /* Darker shade on hover */
+    border-color: #1f6f52; /* Adjust border color on hover */
 }
 </style>
