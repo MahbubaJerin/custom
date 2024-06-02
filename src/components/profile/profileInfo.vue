@@ -126,7 +126,7 @@ fetchUserData();
 </template>
 <style scoped>
 .container {
-  background-color: #9ab79a; /* Forest Green */
+  background-color: #40A578; /* Forest Green */
   color: #FFFFFF; /* White */
 }
 
