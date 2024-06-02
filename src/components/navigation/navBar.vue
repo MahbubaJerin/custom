@@ -28,29 +28,29 @@ const handleLogout = async () => {
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-lg bg-dark " data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-pastel-green">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">PlantBook</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="d-flex flex-row justify-content-between collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li v-if="user" class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        <router-link class="nav-link" :to="{ path: '/' }">Home</router-link>
                     </li>
                     <li v-if="user" class="nav-item">
-                        <a class="nav-link active" aria-current="page" :href="`/profile/${uid}`">Profile</a>
+                        <router-link class="nav-link" :to="{ path: `/profile/${uid}` }">Profile</router-link>
                     </li>
                     <li v-if="user" class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/account">Account</a>
+                        <router-link class="nav-link" to="/account">Account</router-link>
                     </li>
                     <li v-if="!user" class="nav-item">
-                        <a class="nav-link" href="/signup">Signup</a>
+                        <router-link class="nav-link" to="/signup">Signup</router-link>
                     </li>
                     <li v-if="!user" class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
+                        <router-link class="nav-link" to="/login">Login</router-link>
                     </li>
                 </ul>
                 <button v-if="user" @click="handleLogout" class="btn btn-primary">Logout</button>
@@ -58,24 +58,37 @@ const handleLogout = async () => {
         </div>
     </nav>
 </template>
+
 <style scoped>
 .navbar {
-    background-color: #0fef0f; /* This is a dark green color */
-}
-
-.nav-link {
-    color: #FFD700; /* This is a gold color that should stand out against the green */
-}
-
-.nav-link:hover {
-    color: #FFA500; /* This is an orange color for when the user hovers over a link */
+    background-color: #c7eed8; /* Pastel green background color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
 }
 
 .navbar-brand {
-    color: #32CD32; /* This is a lime green color */
+    color: #009688; /* Dark teal color for the brand */
+    font-weight: bold; /* Make the brand text bold */
+    font-size: 24px; /* Increase font size for emphasis */
 }
 
-.navbar-brand:hover {
-    color: #ADFF2F; /* This is a green-yellow color for when the user hovers over the "PlantBook" text */
+.nav-link {
+    color: #333; /* Dark gray color for links */
+    font-weight: bold; /* Make links bold */
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.nav-link:hover {
+    color: #00796b; /* Dark teal color on hover */
+}
+
+.btn-primary {
+    background-color: #00796b; /* Dark teal color for the logout button */
+    border-color: #00796b; /* Same color for button border */
+    font-weight: bold; /* Make button text bold */
+}
+
+.btn-primary:hover {
+    background-color: #004d40; /* Darker shade on hover */
+    border-color: #004d40; /* Adjust border color on hover */
 }
 </style>
