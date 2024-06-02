@@ -61,7 +61,7 @@ const handleLogout = async () => {
 
 <style scoped>
 .navbar {
-    background-color: #c7eed8; /* Pastel green background color */
+    background-color:  #40A578;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
 }
 
