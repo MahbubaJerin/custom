@@ -13,7 +13,6 @@ const auth = getAuth();
 const uid = auth.currentUser.uid;
 const userName = ref('');
 
-
 const fetchUserName = async () => {
   const docRef = doc(userRef, uid);
   const docSnap = await getDoc(docRef);
@@ -94,7 +93,7 @@ const createPost = async () => {
   <div class="container">
     <div class="row">
       <div class="col-md-8 offset-md-2">
-        <div class="card">
+        <div class="card bg-pastel-green">
           <div class="card-body">
 
             <form @submit.prevent="createPost">
@@ -144,5 +143,11 @@ const createPost = async () => {
   background-color: #006400;
   border-color: #006400;
   color: white;
+}
+.bg-pastel-green {
+  background-color: #c7eed8; /* Pastel green background color */
+  border-radius: 15px; /* Rounded corners for the card */
+  padding: 20px; /* Add some padding for spacing */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
 }
 </style>

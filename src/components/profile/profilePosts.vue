@@ -201,7 +201,7 @@ const deletePost = async () => {
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body post-container">
                         <h1 class="text-center">{{ uid == myid ? "Your Posts" : userName + "'s " + "Posts" }}</h1>
                         <div v-for="post in posts" :key="post._id">
                             <div class="card mb-2">
@@ -222,6 +222,7 @@ const deletePost = async () => {
                                     <p>{{ post.post }}</p>
                                     <img v-if="post.image" :src="post.image" alt="post" class="img-fluid"
                                         :style="{ width: '300px', height: '200px' }" />
+                                        
 
                                 </div>
                                 <div class="d-flex align-items-center ms-3">
@@ -255,10 +256,22 @@ const deletePost = async () => {
     cursor: pointer;
 }
 
+.post-container {
+  color: #006400;
+}
+
 .comment-icon {
     width: 20px;
     height: 20px;
     cursor: pointer;
     fill: #007bff;
 }
+
+.post-caption {
+  color: black;
+  font-weight: bold;
+}
+
+
+
 </style>

@@ -48,7 +48,9 @@ const handleSuggestionClick = (userId) => {
                         <div v-if="suggestions.length > 0">
                             <ul>
                                 <li v-for="suggestion in suggestions" :key="suggestion" class="text-white"
-                                    @click="handleSuggestionClick(suggestion.id)">
+                                    @click="handleSuggestionClick(suggestion.id)"
+                                    @mouseenter="highlightSuggestion"
+                                    @mouseleave="removeHighlight">
                                     
                                         {{ suggestion.userName }}
                                     
@@ -70,5 +72,9 @@ const handleSuggestionClick = (userId) => {
 }
 .card-header {
    font-weight: bold;
+}
+.text-white:hover {
+    cursor: pointer;
+    text-decoration: underline; /* Add underline when hovering */
 }
 </style>

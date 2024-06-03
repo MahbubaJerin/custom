@@ -47,7 +47,8 @@ fetchUserData();
       <div class="col-md-6 offset-md-3">
         <div class="card">
           <div v-if="email" class="card-body">
-            <h1 class="text-center">About You</h1>
+            <h1 class="text-center text-green">About You</h1>
+
             <form>
               <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
@@ -60,7 +61,7 @@ fetchUserData();
                 />
               </div>
               <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
+                <label for="username" class="form-label">User name</label>
                 <input
                   type="text"
                   class="form-control"
@@ -140,11 +141,6 @@ fetchUserData();
   border-color: #24ed27; /* Lime Green */
 }
 
-.card {
-  background-color: #3a633a; /* Dark Green */
-  color: #FFFFFF; /* White */
-}
-
 .dropdown-menu {
   background-color: #006400; /* Dark Green */
 }
@@ -152,6 +148,11 @@ fetchUserData();
 .dropdown-item {
   color: #FFFFFF; /* White */
 }
+
+.text-green {
+  color: #006400; /* Dark Green */
+}
+
 
 .dropdown-item:hover {
   background-color: #145c14; /* Lime Green */
