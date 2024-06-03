@@ -319,4 +319,14 @@ const deletePost = async () => {
   color: black;
   font-weight: bold;
 }
+
+.modal-title {
+    color: #006400; /* Color for header */
+    font-weight: bold; /* Make the header bold */
+}
+
+/* Color for username and comment */
+h5, p {
+    color: black;
+}
 </style>
